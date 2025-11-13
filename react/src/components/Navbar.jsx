@@ -1,14 +1,24 @@
 import logo from "../assets/images/logo.png";
 import { NavLink } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
+import axiosClient from "../axios";
 
 function Navbar() {
   const linkClass = ({ isActive }) =>
     isActive
       ? "bg-black text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
       : "text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2";
-  const { userToken } = useStateContext();
+  const { userToken, setCurrentUser, setUserToken } = useStateContext();
   const isAuthenticated = !!userToken;
+
+  const logout = (ev) => {
+    ev.preventDefault();
+
+    axiosClient.post("/logout").then(() => {
+      setCurrentUser({});
+      setUserToken(null);
+    });
+  };
 
   return (
     <nav className="bg-indigo-700 border-b border-indigo-500">
@@ -34,7 +44,10 @@ function Navbar() {
                     <NavLink to="/add-job" className={linkClass}>
                       Add Job
                     </NavLink>
-                    <button className="text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
+                    <button
+                      onClick={(ev) => logout(ev)}
+                      className="text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                    >
                       Logout
                     </button>
                   </>

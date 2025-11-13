@@ -1,11 +1,48 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react';
+import axiosClient from '../axios';
+import { useStateContext } from '../contexts/ContextProvider';
 
 function Signup() {
+  const { setCurrentUser, setUserToken } = useStateContext();
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [error, setError] = useState({ __html: "" });
+
+  const onSubmit = (ev) => {
+    ev.preventDefault();
+    setError({ __html: "" });
+
+    axiosClient.post('/register', {
+        name: fullName,
+        email,
+        password,
+        password_confirmation: passwordConfirmation
+    })
+    .then(({data}) => {
+        setCurrentUser(data.user);
+        setUserToken(data.token);
+    })
+    .catch((error) => {
+      if (error.response) {
+        const finalErrors = Object.values(error.response.data.errors).reduce((accum, next) => [...accum, ...next], []);
+        setError({__html: finalErrors.join('<br>')});
+      }
+    });
+  };
+
   return (
      <section className="bg-indigo-50">
       <div className="container m-auto max-w-md py-24">
         <div className="bg-white px-6 py-8 shadow-md rounded-md border m-4 md:m-0">
-          <form>   
+          {error.__html && (
+            <div className="bg-red-500 rounded py-2 px-3 mb-2 text-white" dangerouslySetInnerHTML={error}>
+            </div>
+          )}
+
+          <form onSubmit={onSubmit}>   
             <h2 className="text-3xl text-center font-semibold mb-6">Create Account</h2>
 
             <div className="mb-4">
@@ -16,6 +53,8 @@ function Signup() {
                 type="text"
                 id="name"
                 name="name"
+                value={fullName}
+                onChange={ev => setFullName(ev.target.value)}
                 className="border rounded w-full py-2 px-3 mb-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500"
                 placeholder="Your full name"
                 required
@@ -30,6 +69,8 @@ function Signup() {
                 type="email"
                 id="email"
                 name="email"
+                value={email}
+                onChange={ev => setEmail(ev.target.value)}
                 className="border rounded w-full py-2 px-3 mb-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500"
                 placeholder="you@example.com"
                 required
@@ -44,6 +85,8 @@ function Signup() {
                 type="password"
                 id="password"
                 name="password"
+                value={password}
+                onChange={ev => setPassword(ev.target.value)}
                 className="border rounded w-full py-2 px-3 mb-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500"
                 placeholder="Create a password"
                 required
@@ -58,6 +101,8 @@ function Signup() {
                 type="password"
                 id="password_confirmation"
                 name="password_confirmation"
+                value={passwordConfirmation}
+                onChange={ev => setPasswordConfirmation(ev.target.value)}
                 className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500"
                 placeholder="Confirm your password"
                 required

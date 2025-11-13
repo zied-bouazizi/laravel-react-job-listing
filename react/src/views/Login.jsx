@@ -1,11 +1,43 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react';
+import { useStateContext } from '../contexts/ContextProvider';
+import axiosClient from '../axios';
 
 function Login() {
+  const { setCurrentUser, setUserToken } = useStateContext();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState({ __html: "" });
+
+  const onSubmit = (ev) => {
+      ev.preventDefault();
+      setError({ __html: "" });
+
+      axiosClient.post('/login', {
+          email,
+          password
+      })
+      .then(({data}) => {
+          setCurrentUser(data.user);
+          setUserToken(data.token);
+      })
+      .catch((error) => {
+        if (error.response) {
+          const finalErrors = Object.values(error.response.data.errors).reduce((accum, next) => [...accum, ...next], []);
+          setError({__html: finalErrors.join('<br>')});
+        }
+      });
+  };
+
   return (
-      <section className="bg-indigo-50">
+    <section className="bg-indigo-50">
       <div className="container m-auto max-w-md py-24">
         <div className="bg-white px-6 py-8 shadow-md rounded-md border m-4 md:m-0">
-          <form>
+          {error.__html && (
+              <div className="bg-red-500 rounded py-2 px-3 mb-2 text-white" dangerouslySetInnerHTML={error}></div>
+          )}
+          
+          <form onSubmit={onSubmit}>
             <h2 className="text-3xl text-center font-semibold mb-6">Login</h2>
 
             <div className="mb-4">
@@ -16,6 +48,8 @@ function Login() {
                 type="email"
                 id="email"
                 name="email"
+                value={email}
+                onChange={ev => setEmail(ev.target.value)}
                 className="border rounded w-full py-2 px-3 mb-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500"
                 placeholder="you@example.com"
                 required
@@ -30,6 +64,8 @@ function Login() {
                 type="password"
                 id="password"
                 name="password"
+                value={password}
+                onChange={ev => setPassword(ev.target.value)}
                 className="border rounded w-full py-2 px-3 mb-1 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500"
                 placeholder="Enter your password"
                 required
