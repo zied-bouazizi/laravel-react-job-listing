@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 
-function CompanyInfo({ company, onChangeCompany }) {
-  const [companyData, setCompanyData] = useState(company);
+function CompanyInfo({ userCompany, onChangeCompany, isUpdate = false }) {
+  const [companyData, setCompanyData] = useState({ ...userCompany });
 
   useEffect(() => {
     onChangeCompany(companyData);
   }, [companyData]);
 
-  useEffect(() => {
-    setCompanyData(company);
-  }, [company]);
-
   return (
     <>
-      <h3 className="text-2xl mb-5">Company Info</h3>
+      <h3 className={isUpdate ? "text-3xl font-semibold" : "text-2xl mb-5"}>
+        Company Info
+      </h3>
+
+      {isUpdate && (
+        <p className="text-gray-600 mb-6">Update your company information.</p>
+      )}
 
       <div className="mb-4">
         <label
@@ -49,7 +51,7 @@ function CompanyInfo({ company, onChangeCompany }) {
           className="border rounded w-full py-2 px-3"
           rows="4"
           placeholder="What does your company do?"
-          value={companyData.description}
+          value={companyData.description || ""}
           onChange={(ev) =>
             setCompanyData({ ...companyData, description: ev.target.value })
           }
@@ -90,7 +92,7 @@ function CompanyInfo({ company, onChangeCompany }) {
           name="contact_phone"
           className="border rounded w-full py-2 px-3"
           placeholder="Optional phone for applicants"
-          value={companyData.phone}
+          value={companyData.phone || ""}
           onChange={(ev) =>
             setCompanyData({ ...companyData, phone: ev.target.value })
           }

@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use App\Helpers\RequestHelper;
-use App\Http\Requests\CompanyRequest;
+use App\Http\Requests\StoreCompanyRequest;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
@@ -25,7 +25,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         $companyRules = RequestHelper::prefixArrayKeys(
-            (new CompanyRequest())->rules(),
+            (new StoreCompanyRequest())->rules(),
             'company'
         );
 
@@ -41,7 +41,7 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return RequestHelper::prefixArrayKeys(
-            (new CompanyRequest())->messages(),
+            (new StoreCompanyRequest())->messages(),
             'company'
         );
     }

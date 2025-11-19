@@ -155,7 +155,7 @@ function Signup() {
             </div>
 
             <CompanyInfo
-              company={userData.company}
+              userCompany={userData.company}
               onChangeCompany={onChangeCompany}
             />
 

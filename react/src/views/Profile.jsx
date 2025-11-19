@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import CompanyForm from "../components/CompanyForm";
 import UpdatePasswordForm from "../components/UpdatePasswordForm";
 import UpdateProfileInformationForm from "../components/UpdateProfileInformationForm";
 import axiosClient from "../axios";
@@ -6,6 +7,7 @@ import Spinners from "../components/Spinners";
 
 function Profile() {
   const [user, setUser] = useState({});
+  const [company, setCompany] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,6 +17,7 @@ function Profile() {
         name: data.name,
         email: data.email,
       });
+      setCompany(data.company);
       setLoading(false);
     });
   }, []);
@@ -29,6 +32,8 @@ function Profile() {
             <UpdateProfileInformationForm user={user} />
 
             <UpdatePasswordForm />
+
+            <CompanyForm company={company} />
           </>
         )}
       </div>
