@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import UpdatePasswordForm from "../components/UpdatePasswordForm";
 import UpdateProfileInformationForm from "../components/UpdateProfileInformationForm";
 import axiosClient from "../axios";
 import Spinners from "../components/Spinners";
@@ -24,7 +25,11 @@ function Profile() {
         {loading ? (
           <Spinners loading={loading} />
         ) : (
-          <UpdateProfileInformationForm user={user} />
+          <>
+            <UpdateProfileInformationForm user={user} />
+
+            <UpdatePasswordForm />
+          </>
         )}
       </div>
     </section>
