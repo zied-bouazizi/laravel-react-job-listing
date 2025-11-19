@@ -12,67 +12,71 @@ import GuestLayout from "./layouts/GuestLayout";
 import SharedLayout from "./layouts/SharedLayout";
 import Job from "./views/Job";
 import Profile from "./views/Profile";
+import RootLayout from "./layouts/RootLayout";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <SharedLayout />,
+    element: <RootLayout />,
     children: [
       {
-        path: "/home",
-        element: <Navigate to="/" />,
+        element: <SharedLayout />,
+        children: [
+          {
+            path: "/home",
+            element: <Navigate to="/" />,
+          },
+          {
+            path: "/",
+            element: <Home />,
+          },
+          {
+            path: "/jobs",
+            element: <Jobs />,
+          },
+          {
+            path: "/jobs/:id",
+            element: <Job />,
+          },
+        ],
       },
       {
-        path: "/",
-        element: <Home />,
+        element: <DefaultLayout />,
+        children: [
+          {
+            path: "/add-job",
+            element: <AddJob />,
+          },
+          {
+            path: "/profile",
+            element: <Profile />,
+          },
+        ],
       },
       {
-        path: "/jobs",
-        element: <Jobs />,
-      },
-      {
-        path: "/jobs/:id",
-        element: <Job />,
+        element: <GuestLayout />,
+        children: [
+          {
+            path: "/login",
+            element: <Login />,
+          },
+          {
+            path: "/register",
+            element: <Signup />,
+          },
+          {
+            path: "/forgot-password",
+            element: <ForgotPassword />,
+          },
+          {
+            path: "/password-reset/:token",
+            element: <ResetPassword />,
+          },
+        ],
       },
       {
         path: "*",
         element: <NotFound />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: <DefaultLayout />,
-    children: [
-      {
-        path: "/add-job",
-        element: <AddJob />,
-      },
-      {
-        path: "/profile",
-        element: <Profile />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: <GuestLayout />,
-    children: [
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Signup />,
-      },
-      {
-        path: "/forgot-password",
-        element: <ForgotPassword />,
-      },
-      {
-        path: "/password-reset/:token",
-        element: <ResetPassword />,
       },
     ],
   },

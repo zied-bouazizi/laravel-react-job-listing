@@ -2,11 +2,11 @@ import { useStateContext } from "../contexts/ContextProvider";
 import DefaultLayout from "./DefaultLayout";
 import GuestLayout from "./GuestLayout";
 
-function SharedLayout({ children }) {
+function SharedLayout() {
   const { userToken } = useStateContext();
   const Layout = userToken ? DefaultLayout : GuestLayout;
 
-  return <Layout>{children}</Layout>;
+  return <Layout />;
 }
 
 export default SharedLayout;
