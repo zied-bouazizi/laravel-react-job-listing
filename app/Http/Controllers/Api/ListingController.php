@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreListingRequest;
 use App\Http\Resources\ListingResource;
 use App\Models\Listing;
 use Illuminate\Http\Request;
@@ -18,6 +19,23 @@ class ListingController extends Controller
         $listings = Listing::latest()->paginate($perPage);
 
         return ListingResource::collection($listings);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreListingRequest $request)
+    {
+        $data = $request->validated();
+
+        $user = $request->user();
+
+        $data['user_id'] = $user->id;
+        $data['company_id'] = $user->company->id;
+
+        $listing = Listing::create($data);
+
+        return new ListingResource($listing);
     }
 
     /**

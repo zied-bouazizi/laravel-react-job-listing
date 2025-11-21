@@ -10,8 +10,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy']);
     Route::put('/profile/password', [ProfileController::class, 'updatePassword']);
     Route::put('/profile/company', [ProfileController::class, 'updateCompany']);
+
+    Route::post('/listings', [ListingController::class, 'store']);
 });
 
-Route::apiResource('listings', ListingController::class);
+Route::get('/listings', [ListingController::class, 'index']);
+Route::get('/listings/{listing}', [ListingController::class, 'show']);
 
 require __DIR__ . '/auth.php';
