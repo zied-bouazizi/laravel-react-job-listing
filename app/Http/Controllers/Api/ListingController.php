@@ -47,4 +47,18 @@ class ListingController extends Controller
 
         return new ListingResource($listing);
     }
+
+    /**
+     * Display a listing of the user's resource.
+     */
+    public function manage(Request $request)
+    {
+        $user = $request->user();
+
+        $listings = $user->listings()
+            ->latest()
+            ->paginate(6);
+
+        return ListingResource::collection($listings);
+    }
 }

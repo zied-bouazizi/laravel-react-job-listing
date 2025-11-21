@@ -59,6 +59,9 @@ function Navbar() {
                 <NavLink to="/add-job" className={linkClass}>
                   Add Job
                 </NavLink>
+                <NavLink to="/manage-jobs" className={linkClass}>
+                  Manage Jobs
+                </NavLink>
                 <NavLink to="/profile" className={linkClass}>
                   Profile
                 </NavLink>
@@ -101,6 +104,9 @@ function Navbar() {
                 </NavLink>
                 <NavLink to="/add-job" className={linkClass}>
                   Add Job
+                </NavLink>
+                <NavLink to="/manage-jobs" className={linkClass}>
+                  Manage Jobs
                 </NavLink>
                 <NavLink to="/profile" className={linkClass}>
                   Profile

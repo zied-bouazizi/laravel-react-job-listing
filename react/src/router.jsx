@@ -13,6 +13,7 @@ import SharedLayout from "./layouts/SharedLayout";
 import Job from "./views/Job";
 import Profile from "./views/Profile";
 import RootLayout from "./layouts/RootLayout";
+import ManageJobs from "./views/ManageJobs";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
           {
             path: "/add-job",
             element: <AddJob />,
+          },
+          {
+            path: "/manage-jobs",
+            element: <ManageJobs />,
           },
           {
             path: "/profile",

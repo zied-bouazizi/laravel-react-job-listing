@@ -11,6 +11,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/profile/password', [ProfileController::class, 'updatePassword']);
     Route::put('/profile/company', [ProfileController::class, 'updateCompany']);
 
+    Route::get('/listings/manage', [ListingController::class, 'manage']);
     Route::post('/listings', [ListingController::class, 'store']);
 });
 
