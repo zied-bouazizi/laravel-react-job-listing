@@ -66,6 +66,20 @@ class ListingController extends Controller
     }
 
     /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Request $request, Listing $listing)
+    {
+        $user = $request->user();
+
+        abort_if($user->id !== $listing->user_id, 403, 'Access Forbidden');
+
+        $listing->delete();
+
+        return response()->noContent();
+    }
+
+    /**
      * Display a listing of the user's resource.
      */
     public function manage(Request $request)
