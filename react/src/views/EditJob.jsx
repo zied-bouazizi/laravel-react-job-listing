@@ -17,18 +17,25 @@ function EditJob() {
   });
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [unauthorizedAction, setUnauthorizedAction] = useState(false);
   const [error, setError] = useState({ __html: "" });
 
   useEffect(() => {
     setLoading(true);
     axiosClient
-      .get(`/listings/${id}`)
+      .get(`/listings/edit/${id}`)
       .then(({ data }) => {
         setJob(data);
       })
       .catch((error) => {
-        if (error.response && error.response.status === 404) {
-          setNotFound(true);
+        if (error.response) {
+          const status = error.response.status;
+
+          if (status === 404) {
+            setNotFound(true);
+          } else if (status === 403) {
+            setUnauthorizedAction(true);
+          }
         }
       })
       .finally(() => {
@@ -38,6 +45,14 @@ function EditJob() {
 
   if (notFound) {
     return <NotFound />;
+  }
+
+  if (unauthorizedAction) {
+    return (
+      <section className="p-64">
+        <p className="text-center text-xl">403 | This action is unauthorized</p>
+      </section>
+    );
   }
 
   const onSubmit = (ev) => {

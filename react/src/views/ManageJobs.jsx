@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import axiosClient from "../axios";
 import Spinner from "../components/Spinner";
 import InfiniteScroll from "../components/InfiniteScroll";
-import Modal from "../components/Modal";
 import { toast } from "react-toastify";
+import DeleteJobModal from "../components/DeleteJobModal";
 
 function ManageJobs() {
   const [listings, setListings] = useState([]);
@@ -106,30 +106,11 @@ function ManageJobs() {
         )}
       </div>
 
-      <Modal show={Boolean(jobToDelete)} onClose={closeModal}>
-        <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-          <h2 className="text-2xl font-semibold mb-6">
-            Are you sure you want to delete this job?
-          </h2>
-
-          <div className="mb-4 flex gap-2">
-            <button
-              type="button"
-              onClick={closeModal}
-              className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full w-full"
-            >
-              Cancel
-            </button>
-
-            <button
-              onClick={onDeleteClick}
-              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full"
-            >
-              Delete Job
-            </button>
-          </div>
-        </div>
-      </Modal>
+      <DeleteJobModal
+        jobToDelete={jobToDelete}
+        closeModal={closeModal}
+        onDeleteClick={onDeleteClick}
+      />
     </section>
   );
 }

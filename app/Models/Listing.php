@@ -11,6 +11,11 @@ class Listing extends Model
 
     protected $fillable = ['user_id', 'company_id', 'title', 'type', 'description', 'location', 'salary'];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function company()
     {
         return $this->belongsTo(Company::class);

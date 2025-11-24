@@ -10,11 +10,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy']);
     Route::put('/profile/password', [ProfileController::class, 'updatePassword']);
     Route::put('/profile/company', [ProfileController::class, 'updateCompany']);
+    Route::get('/profile/user', [ProfileController::class, 'showUser']);
 
     Route::get('/listings/manage', [ListingController::class, 'manage']);
     Route::post('/listings', [ListingController::class, 'store']);
-    Route::put('/listings/{listing}', [ListingController::class, 'update']);
-    Route::delete('/listings/{listing}', [ListingController::class, 'destroy']);
+    Route::get('/listings/edit/{listing}', [ListingController::class, 'showForEdit'])->middleware('can:update,listing');
+    Route::put('/listings/{listing}', [ListingController::class, 'update'])->middleware('can:update,listing');
+    Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->middleware('can:delete,listing');
 });
 
 Route::get('/listings', [ListingController::class, 'index']);

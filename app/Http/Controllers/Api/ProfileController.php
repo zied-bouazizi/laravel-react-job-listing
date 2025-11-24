@@ -83,4 +83,14 @@ class ProfileController extends Controller
 
         return new CompanyResource($company);
     }
+
+    /**
+     * Display the user's information.
+     */
+    public function showUser(Request $request)
+    {
+        $user = $request->user();
+
+        return new UserResource($user);
+    }
 }

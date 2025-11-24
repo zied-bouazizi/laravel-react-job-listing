@@ -44,7 +44,7 @@ class ListingController extends Controller
      */
     public function show(Listing $listing)
     {
-        $listing->load('company');
+        $listing->load(['user', 'company']);
 
         return new ListingResource($listing);
     }
@@ -54,13 +54,11 @@ class ListingController extends Controller
      */
     public function update(UpdateListingRequest $request, Listing $listing)
     {
-        $user = $request->user();
-
-        abort_if($user->id !== $listing->user_id, 403, 'Access Forbidden');
-
         $data = $request->validated();
 
         $listing->update($data);
+
+        $listing->load(['user', 'company']);
 
         return new ListingResource($listing);
     }
@@ -68,12 +66,8 @@ class ListingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Listing $listing)
+    public function destroy(Listing $listing)
     {
-        $user = $request->user();
-
-        abort_if($user->id !== $listing->user_id, 403, 'Access Forbidden');
-
         $listing->delete();
 
         return response()->noContent();
@@ -91,5 +85,13 @@ class ListingController extends Controller
             ->paginate(6);
 
         return ListingResource::collection($listings);
+    }
+
+    /**
+     * Display the specified resource for edit.
+     */
+    public function showForEdit(Listing $listing)
+    {
+        return new ListingResource($listing);
     }
 }

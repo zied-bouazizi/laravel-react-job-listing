@@ -21,6 +21,7 @@ class ListingResource extends JsonResource
             'description' => $this->description,
             'location' => $this->location,
             'salary' => $this->salary,
+            'user' => new UserResource($this->whenLoaded('user')),
             'company' => new CompanyResource($this->whenLoaded('company')),
         ];
     }
