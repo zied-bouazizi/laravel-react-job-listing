@@ -24,7 +24,7 @@ function Profile() {
   }, []);
 
   return (
-    <section className="bg-indigo-50">
+    <section>
       <div className="container m-auto max-w-2xl py-24 space-y-6">
         {loading ? (
           <Spinner loading={loading} />

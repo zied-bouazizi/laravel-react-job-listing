@@ -49,7 +49,7 @@ function EditJob() {
 
   if (unauthorizedAction) {
     return (
-      <section className="p-64">
+      <section className="flex flex-col justify-center items-center h-96">
         <p className="text-center text-xl">403 | This action is unauthorized</p>
       </section>
     );
@@ -78,7 +78,7 @@ function EditJob() {
   };
 
   return (
-    <section className="bg-indigo-50">
+    <section>
       <div className="container m-auto max-w-2xl py-24">
         {loading ? (
           <Spinner loading={loading} />

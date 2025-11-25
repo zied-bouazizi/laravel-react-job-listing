@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 function ViewAllJobs() {
   return (
-    <section className="m-auto max-w-lg my-10 px-6">
+    <section className="px-6 py-10 bg-white flex justify-center">
       <Link
         to="/jobs"
-        className="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
+        className="max-w-lg w-full text-center bg-black text-white py-4 px-6 rounded-xl hover:bg-gray-700"
       >
         View All Jobs
       </Link>

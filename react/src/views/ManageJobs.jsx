@@ -51,7 +51,7 @@ function ManageJobs() {
   };
 
   return (
-    <section className="px-4 py-24">
+    <section className="px-4 py-16">
       <div className="container m-auto">
         <h2 className="text-3xl text-center font-semibold mb-6">Manage Jobs</h2>
 
@@ -70,7 +70,7 @@ function ManageJobs() {
                 )}
 
                 {listings.map((listing) => (
-                  <tr key={listing.id} className="border-indigo-300">
+                  <tr key={listing.id} className="bg-white border-indigo-300">
                     <td className="px-4 py-8 border-t border-b border-indigo-300 font-bold">
                       <Link to={`/jobs/${listing.id}`}>{listing.title}</Link>
                     </td>

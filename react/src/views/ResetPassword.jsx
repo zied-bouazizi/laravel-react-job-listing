@@ -37,7 +37,7 @@ function ResetPassword() {
   };
 
   return (
-    <section className="bg-indigo-50">
+    <section>
       <div className="container m-auto max-w-md py-24">
         <div className="bg-white px-6 py-8 shadow-md rounded-md border m-4 md:m-0">
             {error.__html && (

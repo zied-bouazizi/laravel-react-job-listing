@@ -1,6 +1,6 @@
 import ClipLoader from "react-spinners/ClipLoader";
 
-function Spinner({ loading, size = 150, margin = "135px auto" }) {
+function Spinner({ loading, size = 150, margin = "100px auto" }) {
   const override = {
     display: "block",
     margin,

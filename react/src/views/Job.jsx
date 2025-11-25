@@ -56,7 +56,7 @@ function Job() {
 
   return (
     <>
-      <section>
+      <section className="bg-white">
         <div className="container m-auto py-6 px-6">
           <Link
             to="/jobs"
@@ -67,7 +67,7 @@ function Job() {
         </div>
       </section>
 
-      <section className="bg-indigo-50">
+      <section>
         <div className="container m-auto py-10 px-6">
           {loading ? (
             <Spinner loading={loading} />
